@@ -10,7 +10,7 @@ Instead of utilizing a vanilla GAN, we used a Deep Convolutional Generative Adve
 
 ![The DCGAN generator we implemented.](dcgan.png)
 
-# What went Right
+# What went wrong?
 1. Trying to place more weight on generator
 2. Trying to increase the learning rate of generator over the discriminator
 3. Focusing too much on the loss
