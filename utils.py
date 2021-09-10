@@ -1,5 +1,6 @@
 from __future__ import print_function
-#%matplotlib inline
+from IPython.display import HTML
+from PIL import Image
 import argparse
 import os
 import random
@@ -15,13 +16,57 @@ import torchvision.utils as vutils
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from IPython.display import HTML
 import numpy as np 
 import pandas as pd 
+import urllib
 
+# number of workers
+workers = 2
 
+# batch size
+batch_size = 64
+
+# image size
+image_size = 64
+
+# number of channels 
+nc = 3
+
+# length of latent/random vector
+nz = 100
+
+# number of generator filters
+ngf = 64 
+
+# number of discriminator filters
+ndf = 64
+
+# momentum hyperparam for Adam optimizer
+beta1 = 0.5
+
+# num of gpus
+ngpu = 1
+
+# use cuda if available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
+def create_img_directories(data_path, n_samples):
+    """ 
+        1. Create image directories
+        2. Retrieve images from URLs
+        3. Store images into image directories
+    """
+    
+    os.mkdir(data_path)
+    os.mkdir(data_path + 'images_data/')
+
+    sample_urls = df_train.url.sample(n_samples)
+
+    for img_idx, img_url in enumerate(sample_urls):
+        try:
+            urllib.request.urlretrieve(img_url, f'train/images_data/{img_idx}.jpg')
+        except:
+            None
 
 def weights_init(m):
     classname = m.__class__.__name__
@@ -116,6 +161,7 @@ def plot_loss(G_losses, D_losses):
     plt.show()
     
 def train(num_epochs, ep):
+    real_label = 
     img_list = []
     G_losses = []
     D_losses = []
